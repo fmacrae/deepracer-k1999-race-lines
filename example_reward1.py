@@ -509,7 +509,14 @@ def reward_function(params):
     min_dist = min(distances)
     i_closest = distances.index(min_dist)
 
+    #find the distance to the racing line point for the closest waypoint you are at
     dist_from_racingline = dist(car, ordered_racing_line[i_closest])
-    reward = 1/dist_from_racingline
+
+    #check for divide by 0 and then limit the reward to between 1 and 0.001 normally
+    if dist_from_racingline == 0:
+        #if it is exactly on the racing line give it an extra point
+        reward = 2
+    else:
+        reward = (np.clip(1/dist_from_racingline, 0.01, 10))/10
 
     return reward
