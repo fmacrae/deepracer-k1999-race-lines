@@ -1,8 +1,4 @@
-
-
-
-def get_racing_line_waypoints():
-    return [[  6.61930003,   3.69014067,   6.56131211,   3.15990216,
+array([[  6.61930003,   3.69014067,   6.56131211,   3.15990216,
           6.67728796,   4.22037918,   6.54520631,   3.61259283],
        [  6.91976323,   3.6574257 ,   6.84878769,   3.12876922,
           6.99073878,   4.18608219,   6.76822003,   3.50927247],
@@ -397,46 +393,4 @@ def get_racing_line_waypoints():
        [  6.3188726 ,   3.7231403 ,   6.26038113,   3.19295723,
           6.37736407,   4.25332338,   6.29078679,   3.69187751],
        [  6.61930003,   3.69014067,   6.56131211,   3.15990216,
-          6.67728796,   4.22037918,   6.54520631,   3.61259283]]
-import numpy as np
-
-def dist(point1, point2):
-    return ((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2) ** 0.5
-
-def get_waypoints_ordered_in_driving_direction(params, waypoints):
-    # waypoints are always provided in counter clock wise order
-    if params['is_reversed']: # driving clock wise.
-        return list(reversed(waypoints))
-    else: # driving counter clock wise.
-        return waypoints
-    
-
-def reward_function(params):
-    '''
-    Example of being near the nearest racing line 
-    '''
-
-    waypoints_input = np.array(get_racing_line_waypoints())
-    racing_line = waypoints_input[:,6:8]
-    waypoints = params["waypoints"]
-    
-    ordered_racing_line = get_waypoints_ordered_in_driving_direction(params, racing_line)
-    ordered_waypoints = get_waypoints_ordered_in_driving_direction(params, waypoints)
-
-    car = [params['x'], params['y']]
-
-    distances = [dist(p, car) for p in ordered_waypoints]
-    min_dist = min(distances)
-    i_closest = distances.index(min_dist)
-
-    #find the distance to the racing line point for the closest waypoint you are at
-    dist_from_racingline = dist(car, ordered_racing_line[i_closest])
-
-    #check for divide by 0 and then limit the reward to between 1 and 0.001 normally
-    if dist_from_racingline == 0:
-        #if it is exactly on the racing line give it an extra point
-        reward = 2
-    else:
-        reward = (np.clip(1/dist_from_racingline, 0.01, 10))/10
-
-    return reward
+          6.67728796,   4.22037918,   6.54520631,   3.61259283]])
