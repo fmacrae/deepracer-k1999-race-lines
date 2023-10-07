@@ -24,6 +24,8 @@ Borrowed directly from [Rémi Coulom's PhD Thesis](https://www.remi-coulom.fr/Th
 
 The code was hastily written but achieved a good enough result, so I stopped improving it.  One limitation is that the points along the race line will never migrate in the opposite direction of curvature, leaving some room for further straightening of the race line.
 
+updated by finlay to automate some of the process of creating a simple race line reward function and some debug UI to test it on a track:
+
 Added a reward function debugger at the end
 Links to the reward function defined in the file example_reward1.py
 ![image](https://user-images.githubusercontent.com/23746540/223523817-7fa130fe-1222-4b40-96a3-e798e28704ef.png)
