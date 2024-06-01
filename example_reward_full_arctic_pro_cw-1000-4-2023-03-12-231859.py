@@ -416,7 +416,7 @@ def reward_function(params):
     '''
     Example of being near the nearest racing line 
     '''
-
+    
     waypoints_input = np.array(get_racing_line_waypoints())
     racing_line = waypoints_input[:,6:8]
     waypoints = params["waypoints"]
@@ -440,4 +440,15 @@ def reward_function(params):
     else:
         reward = (np.clip(1/dist_from_racingline, 0.01, 10))/10
 
+    #grab the list of sectors where you want low steer
+    straightsector = list(range(152,174))
+    straightsector.extend(range(73,119))
+
+    if params["closest_waypoints"][1] in straightsector:
+      abs_steering = abs(params['steering_angle'])
+      ABS_STEERING_THRESHOLD = 10.0
+      if abs_steering > ABS_STEERING_THRESHOLD:
+        reward *= 0.8
+
+    
     return reward
